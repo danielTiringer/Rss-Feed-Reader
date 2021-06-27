@@ -14,11 +14,13 @@ import './bootstrap';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RssContextProvider from './contexts/RssContext';
+import RssTable from './components/RssTable';
 
 class App extends React.Component {
   render() {
     return (
       <RssContextProvider>
+        <RssTable/>
       </RssContextProvider>
     );
   }
