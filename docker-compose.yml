@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile
       args:
         PHP_VERSION: ${PHP_VERSION}
-    container_name: rss-backend
+    container_name: rss-application
     env_file:
       - .env
     volumes:
