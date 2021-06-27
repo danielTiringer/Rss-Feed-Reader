@@ -7,9 +7,9 @@ class RssContextProvider extends React.Component {
     super(props);
     this.state = {
       feeds: [
-        {title: 'Some title'},
-        {title: 'Some title'},
-        {title: 'Some title'},
+        {title: 'Some title', url: 'http://localhost'},
+        {title: 'Some title', url: 'http://localhost'},
+        {title: 'Some title', url: 'http://localhost'},
       ],
     };
   }
