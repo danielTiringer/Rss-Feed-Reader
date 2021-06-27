@@ -1,3 +1,11 @@
+# Rss-Feed-Reader
+
+I wanted to play around with a project where I can add RSS feeds and it would display the news for me.
+Playing around with stuff I have little experience with:
+- Symfony
+- React
+- Material UI
+
 # docker-compose-symfony
 
 A docker-compose workflow that sets up a network of containers for local Symfony development with Yarn and Webpack support.
