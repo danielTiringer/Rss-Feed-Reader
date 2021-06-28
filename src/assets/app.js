@@ -16,14 +16,12 @@ import ReactDOM from 'react-dom';
 import RssContextProvider from './contexts/RssContext';
 import RssTable from './components/RssTable';
 
-class App extends React.Component {
-  render() {
+const App = () => {
     return (
       <RssContextProvider>
         <RssTable/>
       </RssContextProvider>
     );
-  }
 }
 
 ReactDOM.render(<App/>, document.getElementById('root'));
