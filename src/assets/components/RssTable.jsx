@@ -9,44 +9,46 @@ const RssTable = () => {
   const context = useContext(RssContext);
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>Title</TableCell>
-          <TableCell>Url</TableCell>
-          <TableCell>Actions</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        <TableRow>
-          <TableCell>
-            <TextField/>
-          </TableCell>
-          <TableCell>
-            <TextField/>
-          </TableCell>
-          <TableCell>
-            <IconButton>
-              <AddIcon/>
-            </IconButton>
-          </TableCell>
-        </TableRow>
-        {context.feeds.map(rss => (
-          <TableRow>
-            <TableCell>{rss.title}</TableCell>
-            <TableCell>{rss.url}</TableCell>
-            <TableCell>
-              <IconButton>
-                <EditIcon/>
-              </IconButton>
-              <IconButton>
-                <DeleteIcon/>
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <form>
+      <Table>
+        <TableHead>
+            <TableRow>
+            <TableCell>Title</TableCell>
+            <TableCell>Url</TableCell>
+            <TableCell>Actions</TableCell>
+            </TableRow>
+        </TableHead>
+        <TableBody>
+            <TableRow>
+                <TableCell>
+                    <TextField label="Title of new RSS feed"/>
+                </TableCell>
+                <TableCell>
+                    <TextField label="Url of new RSS feed"/>
+                </TableCell>
+                <TableCell>
+                    <IconButton>
+                    <AddIcon/>
+                    </IconButton>
+                </TableCell>
+            </TableRow>
+            {context.feeds.map(rss => (
+            <TableRow>
+                <TableCell>{rss.title}</TableCell>
+                <TableCell>{rss.url}</TableCell>
+                <TableCell>
+                <IconButton>
+                    <EditIcon/>
+                </IconButton>
+                <IconButton>
+                    <DeleteIcon/>
+                </IconButton>
+                </TableCell>
+            </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </form>
   );
 }
 
