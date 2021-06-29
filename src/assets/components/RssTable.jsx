@@ -2,14 +2,16 @@ import { Table, TableHead, TableRow, TableCell, TableBody, IconButton, TextField
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { RssContext } from '../contexts/RssContext';
 
 const RssTable = () => {
   const context = useContext(RssContext);
+  const [rssTitle, setRssTitle] = useState('');
+  const [rssUrl, setRssUrl] = useState('');
 
   return (
-    <form>
+    <form onSubmit={event => {context.createRss(event, {title: rssTitle, url: rssUrl})}}>
       <Table>
         <TableHead>
             <TableRow>
@@ -21,18 +23,18 @@ const RssTable = () => {
         <TableBody>
             <TableRow>
                 <TableCell>
-                    <TextField label="Title of new RSS feed"/>
+                  <TextField value={rssTitle} onChange={event => {setRssTitle(event.target.value)}} label="Title of new RSS feed"/>
                 </TableCell>
                 <TableCell>
-                    <TextField label="Url of new RSS feed"/>
+                  <TextField value={rssUrl} onChange={event => {setRssUrl(event.target.value)}} label="Url of new RSS feed"/>
                 </TableCell>
                 <TableCell>
-                    <IconButton>
+                  <IconButton type="submit">
                     <AddIcon/>
-                    </IconButton>
+                  </IconButton>
                 </TableCell>
             </TableRow>
-            {context.feeds.map((rss, index) => (
+          {context.feeds.slice().reverse().map((rss, index) => (
             <TableRow key={'rss' + index}>
                 <TableCell>{rss.title}</TableCell>
                 <TableCell>{rss.url}</TableCell>

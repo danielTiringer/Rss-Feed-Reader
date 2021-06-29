@@ -14,8 +14,13 @@ class RssContextProvider extends React.Component {
     };
   }
 
-  createRss() {
-
+  createRss(event, rss) {
+    event.preventDefault();
+    let feeds = [...this.state.feeds];
+    feeds.push(rss);
+    this.setState({
+      feeds: feeds,
+    })
   }
 
   readRss() {
