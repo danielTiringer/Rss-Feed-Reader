@@ -32,8 +32,8 @@ const RssTable = () => {
                     </IconButton>
                 </TableCell>
             </TableRow>
-            {context.feeds.map(rss => (
-            <TableRow>
+            {context.feeds.map((rss, index) => (
+            <TableRow key={'rss' + index}>
                 <TableCell>{rss.title}</TableCell>
                 <TableCell>{rss.url}</TableCell>
                 <TableCell>
