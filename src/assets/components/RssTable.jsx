@@ -14,26 +14,26 @@ const RssTable = () => {
     <form onSubmit={event => {context.createRss(event, {title: rssTitle, url: rssUrl})}}>
       <Table>
         <TableHead>
-            <TableRow>
+          <TableRow>
             <TableCell>Title</TableCell>
             <TableCell>Url</TableCell>
             <TableCell>Actions</TableCell>
-            </TableRow>
+          </TableRow>
         </TableHead>
         <TableBody>
-            <TableRow>
-                <TableCell>
-                  <TextField value={rssTitle} onChange={event => {setRssTitle(event.target.value)}} label="Title of new RSS feed"/>
-                </TableCell>
-                <TableCell>
-                  <TextField value={rssUrl} onChange={event => {setRssUrl(event.target.value)}} label="Url of new RSS feed"/>
-                </TableCell>
-                <TableCell>
-                  <IconButton type="submit">
-                    <AddIcon/>
-                  </IconButton>
-                </TableCell>
-            </TableRow>
+          <TableRow>
+            <TableCell>
+              <TextField value={rssTitle} onChange={event => {setRssTitle(event.target.value)}} label="Title of new RSS feed"/>
+            </TableCell>
+            <TableCell>
+              <TextField value={rssUrl} onChange={event => {setRssUrl(event.target.value)}} label="Url of new RSS feed"/>
+            </TableCell>
+            <TableCell>
+              <IconButton type="submit">
+                <AddIcon/>
+              </IconButton>
+            </TableCell>
+          </TableRow>
           {context.feeds.slice().reverse().map((rss, index) => (
             <TableRow key={'rss' + index}>
                 <TableCell>{rss.title}</TableCell>
