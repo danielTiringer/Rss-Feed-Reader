@@ -64,12 +64,13 @@ const RssTable = () => {
                     editIsShown === rss.id &&
                     <Fragment>
                       <IconButton onClick={() => {
-                        setEditIsShown(false)
+                        setEditIsShown(false);
                       }}>
                         <CloseIcon/>
                       </IconButton>
                       <IconButton onClick={() => {
-                        context.updateRss({id: rss.id, title: editTitle, url: editUrl})
+                        context.updateRss({id: rss.id, title: editTitle, url: editUrl});
+                        setEditIsShown(false);
                       }}>
                         <DoneIcon/>
                       </IconButton>

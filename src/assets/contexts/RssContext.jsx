@@ -27,8 +27,17 @@ class RssContextProvider extends React.Component {
 
   }
 
-  updateRss(rss) {
-    console.log(rss);
+  updateRss(data) {
+    let feeds = [...this.state.feeds];
+    let feed = feeds.find(feed => {
+      return feed.id === data.id
+    });
+    feed.title = data.title;
+    feed.url = data.url;
+
+    this.setState({
+      feeds: feeds,
+    });
   }
 
   deleteRss() {
