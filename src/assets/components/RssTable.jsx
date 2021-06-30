@@ -1,6 +1,7 @@
 import { Table, TableHead, TableRow, TableCell, TableBody, IconButton, TextField } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
 import React, { useContext, useState } from 'react';
 import { RssContext } from '../contexts/RssContext';
@@ -58,6 +59,12 @@ const RssTable = () => {
                   }
                 </TableCell>
                 <TableCell>
+                  {
+                    editIsShown === rss.id &&
+                    <IconButton>
+                      <DoneIcon/>
+                    </IconButton>
+                  }
                   <IconButton onClick={() => {
                     setEditIsShown(rss.id);
                     setEditTitle(rss.title);
