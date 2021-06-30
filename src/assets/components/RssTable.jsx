@@ -1,9 +1,10 @@
 import { Table, TableHead, TableRow, TableCell, TableBody, IconButton, TextField } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/Edit';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, Fragment } from 'react';
 import { RssContext } from '../contexts/RssContext';
 
 const RssTable = () => {
@@ -21,7 +22,7 @@ const RssTable = () => {
           <TableRow>
             <TableCell>Title</TableCell>
             <TableCell>Url</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -32,7 +33,7 @@ const RssTable = () => {
             <TableCell>
               <TextField value={rssUrl} onChange={event => {setRssUrl(event.target.value)}} label="Url of new RSS feed"/>
             </TableCell>
-            <TableCell>
+            <TableCell align="right">
               <IconButton type="submit">
                 <AddIcon/>
               </IconButton>
@@ -58,12 +59,21 @@ const RssTable = () => {
                     rss.url
                   }
                 </TableCell>
-                <TableCell>
+                <TableCell align="right">
                   {
                     editIsShown === rss.id &&
-                    <IconButton>
-                      <DoneIcon/>
-                    </IconButton>
+                    <Fragment>
+                      <IconButton onClick={() => {
+                        setEditIsShown(false)
+                      }}>
+                        <CloseIcon/>
+                      </IconButton>
+                      <IconButton onClick={() => {
+                        context.updateRss({id: rss.id, title: editTitle, url: editUrl})
+                      }}>
+                        <DoneIcon/>
+                      </IconButton>
+                    </Fragment>
                   }
                   <IconButton onClick={() => {
                     setEditIsShown(rss.id);

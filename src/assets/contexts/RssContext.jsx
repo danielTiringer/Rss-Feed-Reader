@@ -27,8 +27,8 @@ class RssContextProvider extends React.Component {
 
   }
 
-  updateRss() {
-
+  updateRss(rss) {
+    console.log(rss);
   }
 
   deleteRss() {
