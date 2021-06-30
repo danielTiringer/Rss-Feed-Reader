@@ -9,6 +9,9 @@ const RssTable = () => {
   const context = useContext(RssContext);
   const [rssTitle, setRssTitle] = useState('');
   const [rssUrl, setRssUrl] = useState('');
+  const [editIsShown, setEditIsShown] = useState(false);
+  const [editTitle, setEditTitle] = useState('');
+  const [editUrl, setEditUrl] = useState('');
 
   return (
     <form onSubmit={event => {context.createRss(event, {title: rssTitle, url: rssUrl})}}>
@@ -36,10 +39,30 @@ const RssTable = () => {
           </TableRow>
           {context.feeds.slice().reverse().map((rss, index) => (
             <TableRow key={'rss' + index}>
-                <TableCell>{rss.title}</TableCell>
-                <TableCell>{rss.url}</TableCell>
                 <TableCell>
-                <IconButton>
+                  {
+                    editIsShown === rss.id
+                      ?
+                    <TextField value={editTitle} onChange={event => setEditTitle(event.target.value)}/>
+                      :
+                    rss.title
+                  }
+                </TableCell>
+                <TableCell>
+                  {
+                    editIsShown === rss.id
+                      ?
+                    <TextField value={editUrl} onChange={event => setEditUrl(event.target.value)}/>
+                      :
+                    rss.url
+                  }
+                </TableCell>
+                <TableCell>
+                  <IconButton onClick={() => {
+                    setEditIsShown(rss.id);
+                    setEditTitle(rss.title);
+                    setEditUrl(rss.url);
+                  }}>
                     <EditIcon/>
                 </IconButton>
                 <IconButton>
