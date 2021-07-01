@@ -98,7 +98,10 @@ const RssTable = () => {
         </Table>
       </form>
 
-      <DeleteDialog open={deleteConfirmationIsShown}/>
+      <DeleteDialog
+        open={deleteConfirmationIsShown}
+        setDeleteConfirmationIsShown={setDeleteConfirmationIsShown}
+      />
     </Fragment>
   );
 }
