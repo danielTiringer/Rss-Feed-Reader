@@ -23,7 +23,10 @@ const DeleteDialog = props => {
       </DialogContent>
       <DialogActions>
         <Button onClick={hide}>Cancel</Button>
-        <Button onClick={() => context.deleteRss(props.rss)}>Delete</Button>
+        <Button onClick={() => {
+          context.deleteRss(props.rss);
+          hide();
+        }}>Delete</Button>
       </DialogActions>
     </Dialog>
   );
