@@ -19,10 +19,11 @@ const DeleteDialog = props => {
     >
       <DialogTitle>Are you sure you want to delete this feed?</DialogTitle>
       <DialogContent>
+        {props.rss.title}
       </DialogContent>
       <DialogActions>
         <Button onClick={hide}>Cancel</Button>
-        <Button onClick={() => context.deleteRss({id: 0, name: ''})}>Delete</Button>
+        <Button onClick={() => context.deleteRss(props.rss)}>Delete</Button>
       </DialogActions>
     </Dialog>
   );
@@ -31,6 +32,11 @@ const DeleteDialog = props => {
 DeleteDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   setDeleteConfirmationIsShown: PropTypes.func.isRequired,
+  rss: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    url: PropTypes.string,
+  }),
 };
 
 export default DeleteDialog;

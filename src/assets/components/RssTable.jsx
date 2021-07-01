@@ -13,6 +13,7 @@ const RssTable = () => {
   const [rssTitle, setRssTitle] = useState('');
   const [rssUrl, setRssUrl] = useState('');
   const [deleteConfirmationIsShown, setDeleteConfirmationIsShown] = useState(false);
+  const [rssToBeDeleted, setRssToBeDeleted] = useState(null);
   const [editIsShown, setEditIsShown] = useState(false);
   const [editTitle, setEditTitle] = useState('');
   const [editUrl, setEditUrl] = useState('');
@@ -88,6 +89,7 @@ const RssTable = () => {
                   </IconButton>
                   <IconButton onClick={() => {
                     setDeleteConfirmationIsShown(true);
+                    setRssToBeDeleted(rss);
                   }}>
                     <DeleteIcon/>
                   </IconButton>
@@ -98,10 +100,13 @@ const RssTable = () => {
         </Table>
       </form>
 
-      <DeleteDialog
-        open={deleteConfirmationIsShown}
-        setDeleteConfirmationIsShown={setDeleteConfirmationIsShown}
-      />
+      {deleteConfirmationIsShown && (
+        <DeleteDialog
+          rss={rssToBeDeleted}
+          open={deleteConfirmationIsShown}
+          setDeleteConfirmationIsShown={setDeleteConfirmationIsShown}
+        />
+      )}
     </Fragment>
   );
 }
