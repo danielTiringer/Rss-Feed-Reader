@@ -11,6 +11,7 @@ import './styles/app.css';
 // start the Stimulus application
 import './bootstrap';
 
+import { CssBaseline } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RssContextProvider from './contexts/RssContext';
@@ -19,7 +20,9 @@ import RssTable from './components/RssTable';
 const App = () => {
     return (
       <RssContextProvider>
-        <RssTable/>
+        <CssBaseline>
+          <RssTable/>
+        </CssBaseline>
       </RssContextProvider>
     );
 }
