@@ -6,13 +6,22 @@ import { RssContext } from '../contexts/RssContext';
 const DeleteDialog = props => {
   const context = useContext(RssContext);
 
+  const hide = () => {
+    props.setDeleteConfirmationIsShown(false);
+  };
+
   return (
-    <Dialog open={props.open}>
+    <Dialog
+      fullWidth={true}
+      maxWidth='sm'
+      open={props.open}
+      onClose={hide}
+    >
       <DialogTitle>Are you sure you want to delete this feed?</DialogTitle>
       <DialogContent>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => props.setDeleteConfirmationIsShown(false)}>Cancel</Button>
+        <Button onClick={hide}>Cancel</Button>
         <Button onClick={() => context.deleteRss({id: 0, name: ''})}>Delete</Button>
       </DialogActions>
     </Dialog>
