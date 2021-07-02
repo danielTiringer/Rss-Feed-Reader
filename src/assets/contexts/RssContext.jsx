@@ -14,11 +14,15 @@ class RssContextProvider extends React.Component {
 
   createRss(event, rss) {
     event.preventDefault();
-    let feeds = [...this.state.feeds];
-    feeds.push(rss);
-    this.setState({
-      feeds: feeds,
-    })
+    axios.post('/api/rss/create', rss)
+         .then(response => {
+           let feeds = [...this.state.feeds];
+           feeds.push(response.data.rss);
+           this.setState({
+             feeds: feeds,
+           });
+         })
+         .catch(error => console.error(error));
   }
 
   readRss() {
@@ -28,9 +32,7 @@ class RssContextProvider extends React.Component {
              feeds: response.data,
            })
          })
-         .catch(error => {
-           error.log(error);
-         });
+         .catch(error => console.error(error));
   }
 
   updateRss(data) {
