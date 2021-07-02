@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { createContext } from 'react';
 
 export const RssContext = createContext();
@@ -6,12 +7,9 @@ class RssContextProvider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      feeds: [
-        {id: 1, title: 'Some title', url: 'http://localhost'},
-        {id: 2, title: 'Some title', url: 'http://localhost'},
-        {id: 3, title: 'Some title', url: 'http://localhost'},
-      ],
+      feeds: [],
     };
+    this.readRss();
   }
 
   createRss(event, rss) {
@@ -24,7 +22,15 @@ class RssContextProvider extends React.Component {
   }
 
   readRss() {
-
+    axios.get('/api/rss/read')
+         .then(response => {
+           this.setState({
+             feeds: response.data,
+           })
+         })
+         .catch(error => {
+           error.log(error);
+         });
   }
 
   updateRss(data) {
