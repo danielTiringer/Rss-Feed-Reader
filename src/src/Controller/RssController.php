@@ -54,8 +54,9 @@ class RssController extends AbstractController
            $this->entityManager->flush();
             return $this->json([
                 'rss' => $rss->toArray(),
+                'message' => 'The RSS was successfully created.',
             ]);
-        } catch (Exception $exception) {
+        } catch (Exception $e) {
 
         }
 
