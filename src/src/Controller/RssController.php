@@ -59,6 +59,26 @@ class RssController extends AbstractController
         } catch (Exception $e) {
 
         }
+    }
+
+    #[Route('/update/{id}', name: 'api_rss_update', methods: ['PUT'])]
+    public function update(Request $request, Rss $rss): JsonResponse
+    {
+        $content = json_decode($request->getContent());
+
+        $rss->setTitle($content->title);
+        $rss->setUrl($content->url);
+
+        try {
+           $this->entityManager->persist($rss);
+           $this->entityManager->flush();
+            return $this->json([
+                'rss' => $rss->toArray(),
+                'message' => 'The RSS was successfully updated.',
+            ]);
+        } catch (Exception $e) {
+
+        }
 
     }
 }
