@@ -36,16 +36,20 @@ class RssContextProvider extends React.Component {
   }
 
   updateRss(data) {
-    let feeds = [...this.state.feeds];
-    let feed = feeds.find(feed => {
-      return feed.id === data.id
-    });
-    feed.title = data.title;
-    feed.url = data.url;
+    axios.put('/api/rss/update/' + data.id, data)
+         .then(response => {
+            let feeds = [...this.state.feeds];
+            let feed = feeds.find(feed => {
+              return feed.id === response.data.rss.id
+            });
+            feed.title = response.data.rss.title;
+            feed.url = response.data.rss.url;
 
-    this.setState({
-      feeds: feeds,
-    });
+            this.setState({
+              feeds: feeds,
+            });
+         })
+         .catch(error => console.error(error));
   }
 
   deleteRss(data) {
