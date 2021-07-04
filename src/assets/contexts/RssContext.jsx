@@ -53,16 +53,20 @@ class RssContextProvider extends React.Component {
   }
 
   deleteRss(data) {
-    let feeds = [...this.state.feeds];
-    let feed = feeds.find(rss => {
-      return rss.id === data.id;
-    });
+    axios.delete('/api/rss/delete/' + data.id)
+         .then(() => {
+            let feeds = [...this.state.feeds];
+            let feed = feeds.find(rss => {
+              return rss.id === data.id;
+            });
 
-    feeds.splice(feeds.indexOf(feed), 1);
+            feeds.splice(feeds.indexOf(feed), 1);
 
-    this.setState({
-      feeds: feeds,
-    });
+            this.setState({
+              feeds: feeds,
+            });
+         })
+         .catch(error => console.error(error));
   }
 
   render() {

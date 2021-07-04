@@ -79,6 +79,20 @@ class RssController extends AbstractController
         } catch (Exception $e) {
 
         }
+    }
 
+    #[Route('/delete/{id}', name: 'api_rss_delete', methods: ['DELETE'])]
+    public function delete(Rss $rss): JsonResponse
+    {
+        try {
+            $this->entityManager->remove($rss);
+            $this->entityManager->flush();
+        } catch (Exception $e) {
+
+        }
+
+        return $this->json([
+            'message' => 'The RSS was successfully deleted.',
+        ]);
     }
 }
