@@ -60,7 +60,10 @@ class RssController extends AbstractController
             'rss' => $rss->toArray(),
             'message' => [
                 'level' => 'success',
-                'text' => 'The RSS was successfully created.',
+                'text' => [
+                    'The RSS was successfully created.',
+                    'Title: ' . $content->title,
+                ],
             ],
         ]);
     }

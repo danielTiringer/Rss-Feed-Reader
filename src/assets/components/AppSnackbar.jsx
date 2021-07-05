@@ -1,5 +1,5 @@
 import { Button, Snackbar, SnackbarContent } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { RssContext } from '../contexts/RssContext';
 
 const AppSnackbar = () => {
@@ -10,12 +10,22 @@ const AppSnackbar = () => {
       autoHideDuration={6000}
       open={context.message.text !== undefined}
     >
-      <SnackbarContent
-        message={context.message.text}
-        action={[
-          <Button key='dismiss'>Dismiss</Button>
-        ]}
-      />
+      {context.message.text && (
+        <SnackbarContent
+          message={context.message.text.map((text, index) => (
+            <Fragment key={index + ' ' + text}>
+              <span>{text}</span>
+              <br/>
+            </Fragment>
+          ))}
+          action={[
+            <Button
+              onClick={() => {context.setMessage({})}}
+              key='dismiss'
+            >Dismiss</Button>
+          ]}
+        />
+      )}
     </Snackbar>
   )
 }
