@@ -53,7 +53,14 @@ class RssController extends AbstractController
            $this->entityManager->persist($rss);
            $this->entityManager->flush();
         } catch (Exception $e) {
-
+            return $this->json([
+                'message' => [
+                    'level' => 'error',
+                    'text' => [
+                        'Could not save the database..',
+                    ],
+                ],
+            ]);
         }
 
         return $this->json([
