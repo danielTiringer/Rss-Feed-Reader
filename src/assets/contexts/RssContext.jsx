@@ -8,6 +8,7 @@ class RssContextProvider extends React.Component {
     super(props);
     this.state = {
       feeds: [],
+      message: {},
     };
     this.readRss();
   }
@@ -16,11 +17,18 @@ class RssContextProvider extends React.Component {
     event.preventDefault();
     axios.post('/api/rss/create', rss)
          .then(response => {
-           let feeds = [...this.state.feeds];
-           feeds.push(response.data.rss);
-           this.setState({
-             feeds: feeds,
-           });
+           if (response.data.message.level === 'success') {
+              let feeds = [...this.state.feeds];
+              feeds.push(response.data.rss);
+              this.setState({
+                feeds: feeds,
+                message: response.data.message,
+              });
+           } else {
+             this.setState({
+               message: response.data.message,
+             });
+           }
          })
          .catch(error => console.error(error));
   }
@@ -69,6 +77,10 @@ class RssContextProvider extends React.Component {
          .catch(error => console.error(error));
   }
 
+  setMessage(message) {
+    this.setState({message: message});
+  }
+
   render() {
     return (
       <RssContext.Provider value={{
@@ -76,6 +88,7 @@ class RssContextProvider extends React.Component {
         createRss: this.createRss.bind(this),
         updateRss: this.updateRss.bind(this),
         deleteRss: this.deleteRss.bind(this),
+        setMessage: this.setMessage.bind(this),
       }}>
         {this.props.children}
       </RssContext.Provider>

@@ -52,13 +52,17 @@ class RssController extends AbstractController
         try {
            $this->entityManager->persist($rss);
            $this->entityManager->flush();
-            return $this->json([
-                'rss' => $rss->toArray(),
-                'message' => 'The RSS was successfully created.',
-            ]);
         } catch (Exception $e) {
 
         }
+
+        return $this->json([
+            'rss' => $rss->toArray(),
+            'message' => [
+                'level' => 'success',
+                'text' => 'The RSS was successfully created.',
+            ],
+        ]);
     }
 
     #[Route('/update/{id}', name: 'api_rss_update', methods: ['PUT'])]

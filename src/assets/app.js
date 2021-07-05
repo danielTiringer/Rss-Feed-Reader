@@ -11,6 +11,7 @@ import './styles/app.css';
 // start the Stimulus application
 import './bootstrap';
 
+import AppSnackbar from './components/AppSnackbar';
 import { CssBaseline } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -22,6 +23,7 @@ const App = () => {
       <RssContextProvider>
         <CssBaseline>
           <RssTable/>
+          <AppSnackbar/>
         </CssBaseline>
       </RssContextProvider>
     );
