@@ -24,12 +24,7 @@ const AppSnackbar = () => {
       {context.message.text && (
         <SnackbarContent
           style={{backgroundColor: checkLevel(context.message.level)}}
-          message={context.message.text.map((text, index) => (
-            <Fragment key={index + ' ' + text}>
-              <span>{text}</span>
-              <br/>
-            </Fragment>
-          ))}
+          message={context.message.text}
           action={[
             <Button
               onClick={() => {context.setMessage({})}}

@@ -22,13 +22,12 @@ class RssContextProvider extends React.Component {
               feeds.push(response.data.rss);
               this.setState({
                 feeds: feeds,
-                message: response.data.message,
               });
-           } else {
-             this.setState({
-               message: response.data.message,
-             });
            }
+
+           this.setState({
+             message: response.data.message,
+           });
          })
          .catch(error => console.error(error));
   }
@@ -46,15 +45,21 @@ class RssContextProvider extends React.Component {
   updateRss(data) {
     axios.put('/api/rss/update/' + data.id, data)
          .then(response => {
-            let feeds = [...this.state.feeds];
-            let feed = feeds.find(feed => {
-              return feed.id === response.data.rss.id
-            });
-            feed.title = response.data.rss.title;
-            feed.url = response.data.rss.url;
+           if (response.data.message.level === 'success') {
+              let feeds = [...this.state.feeds];
+              let feed = feeds.find(feed => {
+                return feed.id === response.data.rss.id
+              });
+              feed.title = response.data.rss.title;
+              feed.url = response.data.rss.url;
+
+              this.setState({
+                feeds: feeds,
+              });
+           }
 
             this.setState({
-              feeds: feeds,
+              message: response.data.message,
             });
          })
          .catch(error => console.error(error));
@@ -62,16 +67,22 @@ class RssContextProvider extends React.Component {
 
   deleteRss(data) {
     axios.delete('/api/rss/delete/' + data.id)
-         .then(() => {
-            let feeds = [...this.state.feeds];
-            let feed = feeds.find(rss => {
-              return rss.id === data.id;
-            });
+         .then(response => {
+           if (response.data.message.level === 'success') {
+              let feeds = [...this.state.feeds];
+              let feed = feeds.find(rss => {
+                return rss.id === data.id;
+              });
 
-            feeds.splice(feeds.indexOf(feed), 1);
+              feeds.splice(feeds.indexOf(feed), 1);
+
+              this.setState({
+                feeds: feeds,
+              });
+           }
 
             this.setState({
-              feeds: feeds,
+              message: response.data.message,
             });
          })
          .catch(error => console.error(error));
