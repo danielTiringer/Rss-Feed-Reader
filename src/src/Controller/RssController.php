@@ -56,9 +56,7 @@ class RssController extends AbstractController
             return $this->json([
                 'message' => [
                     'level' => 'error',
-                    'text' => [
-                        'Could not save the database..',
-                    ],
+                    'text' => 'Could not save to the database.',
                 ],
             ]);
         }
@@ -67,10 +65,7 @@ class RssController extends AbstractController
             'rss' => $rss->toArray(),
             'message' => [
                 'level' => 'success',
-                'text' => [
-                    'The RSS was successfully created.',
-                    'Title: ' . $content->title,
-                ],
+                'text' => 'The RSS was successfully created.',
             ],
         ]);
     }
@@ -86,13 +81,22 @@ class RssController extends AbstractController
         try {
            $this->entityManager->persist($rss);
            $this->entityManager->flush();
-            return $this->json([
-                'rss' => $rss->toArray(),
-                'message' => 'The RSS was successfully updated.',
-            ]);
         } catch (Exception $e) {
-
+            return $this->json([
+                'message' => [
+                    'level' => 'error',
+                    'text' => 'Could not update the database.',
+                ],
+            ]);
         }
+
+        return $this->json([
+            'rss' => $rss->toArray(),
+            'message' => [
+                'level' => 'success',
+                'text' => 'The RSS was successfully updated.',
+            ],
+        ]);
     }
 
     #[Route('/delete/{id}', name: 'api_rss_delete', methods: ['DELETE'])]
@@ -102,11 +106,19 @@ class RssController extends AbstractController
             $this->entityManager->remove($rss);
             $this->entityManager->flush();
         } catch (Exception $e) {
-
+            return $this->json([
+                'message' => [
+                    'level' => 'error',
+                    'text' => 'Could not delete from the database.',
+                ],
+            ]);
         }
 
         return $this->json([
-            'message' => 'The RSS was successfully deleted.',
+            'message' => [
+                'level' => 'success',
+                'text' => 'The RSS was successfully deleted.',
+            ],
         ]);
     }
 }
