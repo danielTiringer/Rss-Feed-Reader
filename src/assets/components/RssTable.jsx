@@ -10,17 +10,37 @@ import { RssContext } from '../contexts/RssContext';
 
 const RssTable = () => {
   const context = useContext(RssContext);
-  const [rssTitle, setRssTitle] = useState('');
-  const [rssUrl, setRssUrl] = useState('');
+  const [addTitle, setAddTitle] = useState('');
+  const [addUrl, setAddUrl] = useState('');
   const [deleteConfirmationIsShown, setDeleteConfirmationIsShown] = useState(false);
   const [rssToBeDeleted, setRssToBeDeleted] = useState(null);
   const [editIsShown, setEditIsShown] = useState(false);
   const [editTitle, setEditTitle] = useState('');
   const [editUrl, setEditUrl] = useState('');
 
+  const onCreateSubmit = event => {
+    event.preventDefault();
+    context.createRss(event, {
+      title: addTitle,
+      url: addUrl,
+    });
+    setAddTitle('');
+    setAddUrl('');
+  }
+
+  const onEditSubmit = (rssId, event) => {
+    event.preventDefault();
+    context.updateRss({
+      id: rssId,
+      title: editTitle,
+      url: editUrl,
+    });
+    setEditIsShown(false);
+  }
+
   return (
     <Fragment>
-      <form onSubmit={event => {context.createRss(event, {title: rssTitle, url: rssUrl})}}>
+      <form onSubmit={onCreateSubmit}>
         <Table>
           <TableHead>
             <TableRow>
@@ -32,13 +52,20 @@ const RssTable = () => {
           <TableBody>
             <TableRow>
               <TableCell>
-                <TextField value={rssTitle} onChange={event => {setRssTitle(event.target.value)}} label="Title of new RSS feed"/>
+                <TextField
+                  value={addTitle}
+                  onChange={event => {setAddTitle(event.target.value)}}
+                  label="Title of new RSS feed"
+                />
               </TableCell>
               <TableCell>
-                <TextField value={rssUrl} onChange={event => {setRssUrl(event.target.value)}} label="Url of new RSS feed"/>
+                <TextField
+                  value={addUrl}
+                  onChange={event => {setAddUrl(event.target.value)}}
+                  label="Url of new RSS feed"/>
               </TableCell>
               <TableCell align="right">
-                <IconButton type="submit">
+                <IconButton onClick={onCreateSubmit}>
                   <AddIcon/>
                 </IconButton>
               </TableCell>
