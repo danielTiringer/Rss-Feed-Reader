@@ -45,7 +45,7 @@ class RssContextProvider extends React.Component {
   updateRss(data) {
     axios.put('/api/rss/update/' + data.id, data)
          .then(response => {
-           if (response.data.message.level === 'success') {
+           if (response.data.message.level === 'success' && response.data.rss) {
               let feeds = [...this.state.feeds];
               let feed = feeds.find(feed => {
                 return feed.id === response.data.rss.id
