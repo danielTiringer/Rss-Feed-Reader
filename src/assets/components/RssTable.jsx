@@ -40,7 +40,6 @@ const RssTable = () => {
 
   return (
     <Fragment>
-      <form onSubmit={onCreateSubmit}>
         <Table>
           <TableHead>
             <TableRow>
@@ -52,17 +51,24 @@ const RssTable = () => {
           <TableBody>
             <TableRow>
               <TableCell>
-                <TextField
-                  value={addTitle}
-                  onChange={event => {setAddTitle(event.target.value)}}
-                  label="Title of new RSS feed"
-                />
+                <form onSubmit={onCreateSubmit}>
+                  <TextField
+                    type="text"
+                    value={addTitle}
+                    onChange={event => {setAddTitle(event.target.value)}}
+                    label="Title of new RSS feed"
+                  />
+                </form>
               </TableCell>
               <TableCell>
-                <TextField
-                  value={addUrl}
-                  onChange={event => {setAddUrl(event.target.value)}}
-                  label="Url of new RSS feed"/>
+                <form>
+                  <TextField
+                    type="text"
+                    value={addUrl}
+                    onChange={event => {setAddUrl(event.target.value)}}
+                    label="Url of new RSS feed"
+                  />
+                </form>
               </TableCell>
               <TableCell align="right">
                 <IconButton onClick={onCreateSubmit}>
@@ -71,12 +77,16 @@ const RssTable = () => {
               </TableCell>
             </TableRow>
             {context.feeds.slice().reverse().map((rss, index) => (
+              /* <form onSubmit = {onEditSubmit.bind(this, rss.id)}> */
               <TableRow key={'rss' + index}>
                   <TableCell>
                     {
                       editIsShown === rss.id
                         ?
-                      <TextField value={editTitle} onChange={event => setEditTitle(event.target.value)}/>
+                      <TextField
+                        value={editTitle}
+                        onChange={event => setEditTitle(event.target.value)}
+                      />
                         :
                       rss.title
                     }
@@ -99,10 +109,7 @@ const RssTable = () => {
                         }}>
                           <CloseIcon/>
                         </IconButton>
-                        <IconButton onClick={() => {
-                          context.updateRss({id: rss.id, title: editTitle, url: editUrl});
-                          setEditIsShown(false);
-                        }}>
+                        <IconButton onClick={onEditSubmit}>
                           <DoneIcon/>
                         </IconButton>
                       </Fragment>
@@ -122,10 +129,10 @@ const RssTable = () => {
                   </IconButton>
                 </TableCell>
               </TableRow>
+              /* </form> */
               ))}
           </TableBody>
         </Table>
-      </form>
 
       {deleteConfirmationIsShown && (
         <DeleteDialog
