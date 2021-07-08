@@ -75,6 +75,18 @@ class RssController extends AbstractController
     {
         $content = json_decode($request->getContent());
 
+        if (
+            $rss->getTitle() === $content->title
+            && $rss->getUrl() === $content->url
+        ) {
+            return $this->json([
+                'message' => [
+                    'level' => 'success',
+                    'text' => 'No changes were made to the feed.',
+                ],
+            ]);
+        }
+
         $rss->setTitle($content->title);
         $rss->setUrl($content->url);
 
