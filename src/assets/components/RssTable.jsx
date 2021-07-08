@@ -40,99 +40,106 @@ const RssTable = () => {
 
   return (
     <Fragment>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Title</TableCell>
-              <TableCell>Url</TableCell>
-              <TableCell align="right">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>
-                <form onSubmit={onCreateSubmit}>
-                  <TextField
-                    type="text"
-                    value={addTitle}
-                    onChange={event => {setAddTitle(event.target.value)}}
-                    label="Title of new RSS feed"
-                  />
-                </form>
-              </TableCell>
-              <TableCell>
-                <form>
-                  <TextField
-                    type="text"
-                    value={addUrl}
-                    onChange={event => {setAddUrl(event.target.value)}}
-                    label="Url of new RSS feed"
-                  />
-                </form>
-              </TableCell>
-              <TableCell align="right">
-                <IconButton onClick={onCreateSubmit}>
-                  <AddIcon/>
-                </IconButton>
-              </TableCell>
-            </TableRow>
-            {context.feeds.slice().reverse().map((rss, index) => (
-              /* <form onSubmit = {onEditSubmit.bind(this, rss.id)}> */
-              <TableRow key={'rss' + index}>
-                  <TableCell>
-                    {
-                      editIsShown === rss.id
-                        ?
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Title</TableCell>
+            <TableCell>Url</TableCell>
+            <TableCell align="right">Actions</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              <form onSubmit={onCreateSubmit}>
+                <TextField
+                  type="text"
+                  value={addTitle}
+                  onChange={event => {setAddTitle(event.target.value)}}
+                  label="Title of new RSS feed"
+                />
+              </form>
+            </TableCell>
+            <TableCell>
+              <form>
+                <TextField
+                  type="text"
+                  value={addUrl}
+                  onChange={event => {setAddUrl(event.target.value)}}
+                  label="Url of new RSS feed"
+                />
+              </form>
+            </TableCell>
+            <TableCell align="right">
+              <IconButton onClick={onCreateSubmit}>
+                <AddIcon/>
+              </IconButton>
+            </TableCell>
+          </TableRow>
+          {context.feeds.slice().reverse().map((rss, index) => (
+            <TableRow key={'rss' + index}>
+                <TableCell>
+                  {
+                    editIsShown === rss.id
+                      ?
+                    <form onSubmit={onEditSubmit.bind(this, rss.id)}>
                       <TextField
+                        type="text"
                         value={editTitle}
                         onChange={event => setEditTitle(event.target.value)}
                       />
-                        :
-                      rss.title
-                    }
-                  </TableCell>
-                  <TableCell>
-                    {
-                      editIsShown === rss.id
-                        ?
-                      <TextField value={editUrl} onChange={event => setEditUrl(event.target.value)}/>
-                        :
-                      rss.url
-                    }
-                  </TableCell>
-                  <TableCell align="right">
-                    {
-                      editIsShown === rss.id &&
-                      <Fragment>
-                        <IconButton onClick={() => {
-                          setEditIsShown(false);
-                        }}>
-                          <CloseIcon/>
-                        </IconButton>
-                        <IconButton onClick={onEditSubmit}>
-                          <DoneIcon/>
-                        </IconButton>
-                      </Fragment>
-                    }
-                    <IconButton onClick={() => {
-                      setEditIsShown(rss.id);
-                      setEditTitle(rss.title);
-                      setEditUrl(rss.url);
-                    }}>
-                      <EditIcon/>
-                  </IconButton>
-                  <IconButton onClick={() => {
-                    setDeleteConfirmationIsShown(true);
-                    setRssToBeDeleted(rss);
-                  }}>
-                    <DeleteIcon/>
-                  </IconButton>
+                    </form>
+                      :
+                    rss.title
+                  }
                 </TableCell>
-              </TableRow>
-              /* </form> */
-              ))}
-          </TableBody>
-        </Table>
+                <TableCell>
+                  {
+                    editIsShown === rss.id
+                      ?
+                    <form onSubmit={onEditSubmit.bind(this, rss.id)}>
+                      <TextField
+                        type="text"
+                        value={editUrl}
+                        onChange={event => setEditUrl(event.target.value)}
+                      />
+                    </form>
+                      :
+                    rss.url
+                  }
+                </TableCell>
+                <TableCell align="right">
+                  {
+                    editIsShown === rss.id &&
+                    <Fragment>
+                      <IconButton onClick={() => {
+                        setEditIsShown(false);
+                      }}>
+                        <CloseIcon/>
+                      </IconButton>
+                      <IconButton onClick={onEditSubmit.bind(this, rss.id)}>
+                        <DoneIcon/>
+                      </IconButton>
+                    </Fragment>
+                  }
+                  <IconButton onClick={() => {
+                    setEditIsShown(rss.id);
+                    setEditTitle(rss.title);
+                    setEditUrl(rss.url);
+                  }}>
+                    <EditIcon/>
+                </IconButton>
+                <IconButton onClick={() => {
+                  setDeleteConfirmationIsShown(true);
+                  setRssToBeDeleted(rss);
+                }}>
+                  <DeleteIcon/>
+                </IconButton>
+              </TableCell>
+            </TableRow>
+            ))}
+        </TableBody>
+      </Table>
 
       {deleteConfirmationIsShown && (
         <DeleteDialog
