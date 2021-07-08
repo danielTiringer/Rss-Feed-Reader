@@ -82,13 +82,11 @@ const RssTable = () => {
                   {
                     editIsShown === rss.id
                       ?
-                    <form onSubmit={onEditSubmit.bind(this, rss.id)}>
-                      <TextField
-                        type="text"
-                        value={editTitle}
-                        onChange={event => setEditTitle(event.target.value)}
-                      />
-                    </form>
+                    <TextField
+                      type="text"
+                      value={editTitle}
+                      onChange={event => setEditTitle(event.target.value)}
+                    />
                       :
                     rss.title
                   }
@@ -97,13 +95,11 @@ const RssTable = () => {
                   {
                     editIsShown === rss.id
                       ?
-                    <form onSubmit={onEditSubmit.bind(this, rss.id)}>
-                      <TextField
-                        type="text"
-                        value={editUrl}
-                        onChange={event => setEditUrl(event.target.value)}
-                      />
-                    </form>
+                    <TextField
+                      type="text"
+                      value={editUrl}
+                      onChange={event => setEditUrl(event.target.value)}
+                    />
                       :
                     rss.url
                   }
