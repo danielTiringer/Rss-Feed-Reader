@@ -23,17 +23,17 @@ class Rss
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $url;
 
     /**
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime", columnDefinition="DATETIME on update CURRENT_TIMESTAMP")
      */
     private $updatedAt;
 
