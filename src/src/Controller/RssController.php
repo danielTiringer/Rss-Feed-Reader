@@ -46,20 +46,13 @@ class RssController extends AbstractController
     {
         $content = json_decode($request->getContent());
 
-        $form = $this->createForm(RssType::class);
-        $form->submit((array)$content);
+        $contentErrors = $this->verifyRequestData($content);
 
-        if (!$form->isValid()) {
-            $errors = [];
-            foreach ($form->getErrors(true, true) as $error) {
-                $propertyName = $error->getOrigin()->getName();
-                $errors[$propertyName] = $error->getMessage();
-            }
-
+        if ($contentErrors) {
             return $this->json([
                 'message' => [
                     'level' => 'error',
-                    'text' => implode("\n", $errors),
+                    'text' => implode("\n", $contentErrors),
                 ],
             ]);
         }
@@ -151,5 +144,25 @@ class RssController extends AbstractController
                 'text' => 'The RSS was successfully deleted.',
             ],
         ]);
+    }
+
+    /**
+     * @param array|null $content
+     * @return array|null
+     */
+    private function verifyRequestData($content): ?array
+    {
+        $form = $this->createForm(RssType::class);
+        $form->submit((array)$content);
+
+        if (!$form->isValid()) {
+            $errors = [];
+            foreach ($form->getErrors(true, true) as $error) {
+                $propertyName = $error->getOrigin()->getName();
+                $errors[$propertyName] = $error->getMessage();
+            }
+
+            return $errors;
+        }
     }
 }
