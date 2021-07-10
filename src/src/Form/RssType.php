@@ -31,7 +31,7 @@ class RssType extends AbstractType
             ->add('url', TextType::class, [
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'RSS name cannot be blank.',
+                        'message' => 'Url cannot be blank.',
                     ]),
                     new Length([
                         'min' => 5,
@@ -41,14 +41,13 @@ class RssType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('createdAt')
-            ->add('updatedAt')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'csrf_protection' => false,
             'data_class' => Rss::class,
         ]);
     }
