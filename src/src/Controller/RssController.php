@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Rss;
+use App\Form\RssType;
 use App\Repository\RssRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -44,6 +45,24 @@ class RssController extends AbstractController
     public function create(Request $request): JsonResponse
     {
         $content = json_decode($request->getContent());
+
+        $form = $this->createForm(RssType::class);
+        $form->submit((array)$content);
+
+        if (!$form->isValid()) {
+            $errors = [];
+            foreach ($form->getErrors(true, true) as $error) {
+                $propertyName = $error->getOrigin()->getName();
+                $errors[$propertyName] = $error->getMessage();
+            }
+
+            return $this->json([
+                'message' => [
+                    'level' => 'error',
+                    'text' => implode("\n", $errors),
+                ],
+            ]);
+        }
 
         $rss = new Rss();
         $rss->setTitle($content->title);
