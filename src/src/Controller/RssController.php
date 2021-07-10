@@ -86,6 +86,19 @@ class RssController extends AbstractController
     public function update(Request $request, Rss $rss): JsonResponse
     {
         $content = json_decode($request->getContent());
+        $contentWithoutId = (array)$content;
+
+        unset($contentWithoutId['id']);
+        $contentErrors = $this->verifyRequestData($contentWithoutId);
+
+        if ($contentErrors) {
+            return $this->json([
+                'message' => [
+                    'level' => 'error',
+                    'text' => implode("\n", $contentErrors),
+                ],
+            ]);
+        }
 
         if (
             $rss->getTitle() === $content->title
@@ -150,12 +163,12 @@ class RssController extends AbstractController
      * @param array|null $content
      * @return array|null
      */
-    private function verifyRequestData($content): ?array
+    private function verifyRequestData($content)
     {
         $form = $this->createForm(RssType::class);
         $form->submit((array)$content);
 
-        if (!$form->isValid()) {
+        if ($form->isSubmitted() && !$form->isValid()) {
             $errors = [];
             foreach ($form->getErrors(true, true) as $error) {
                 $propertyName = $error->getOrigin()->getName();
