@@ -48,8 +48,8 @@ services:
     networks:
       - rss
 
-  webpack:
-    container_name: rss-webpack
+  encore:
+    container_name: rss-encore
     build:
       context: ./src
       dockerfile: ../Docker/yarn/Dockerfile
